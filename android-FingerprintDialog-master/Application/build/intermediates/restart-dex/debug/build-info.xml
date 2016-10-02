@@ -4,9 +4,9 @@
     density="560dpi"
     format="8"
     plugin-version="2.2.0"
-    timestamp="19397526744558"
+    timestamp="25370280425192"
     token="-8360660117442656015"
-    verifier="MANIFEST_FILE_CHANGE" >
+    verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
@@ -16,21 +16,28 @@
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="594" />
+        duration="0" />
     <task
         name="verifier"
-        duration="24" />
+        duration="0" />
 
     <artifact
-        location="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\outputs\apk\Application-debug.apk"
-        type="MAIN" />
+        location="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\transforms\dex\debug\folders\1000\5\slice_2\classes.dex"
+        type="DEX" />
 
     <build
-        timestamp="19397526744558"
-        verifier="MANIFEST_FILE_CHANGE" >
+        timestamp="23028208022207"
+        verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\outputs\apk\Application-debug.apk"
             type="MAIN" />
+    </build>
+    <build
+        timestamp="25370280425192"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\transforms\dex\debug\folders\1000\5\slice_2\classes.dex"
+            type="DEX" />
     </build>
 
 </instant-run>

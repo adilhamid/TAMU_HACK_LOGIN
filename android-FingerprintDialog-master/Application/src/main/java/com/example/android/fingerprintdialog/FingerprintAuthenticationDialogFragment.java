@@ -33,6 +33,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A dialog which uses fingerprint APIs to authenticate the user, and falls back to password
@@ -244,6 +245,7 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
         // Callback from FingerprintUiHelper. Let the activity know that authentication was
         // successful.
         mActivity.onPurchased(true /* withFingerprint */, mCryptoObject);
+        Toast.makeText(getContext(),"I am here",  Toast.LENGTH_LONG).show();
         dismiss();
     }
 

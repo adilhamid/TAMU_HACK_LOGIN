@@ -1,11 +1,11 @@
 [
     {
-        "merged": "D:\\AndroidStudio\\android-FingerprintDialog-master\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
-        "source": "D:\\AndroidStudio\\android-FingerprintDialog-master\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
-    },
-    {
         "merged": "D:\\AndroidStudio\\android-FingerprintDialog-master\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_up_container.xml",
         "source": "D:\\AndroidStudio\\android-FingerprintDialog-master\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\layout\\abc_action_bar_up_container.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudio\\android-FingerprintDialog-master\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
+        "source": "D:\\AndroidStudio\\android-FingerprintDialog-master\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
     },
     {
         "merged": "D:\\AndroidStudio\\android-FingerprintDialog-master\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\abc_dialog_title_material.xml",

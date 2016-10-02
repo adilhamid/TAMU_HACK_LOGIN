@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2015 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License
- */
-
 package com.example.android.fingerprintdialog;
 
 import android.app.Activity;
@@ -35,7 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.google.android.gms.common.api.GoogleApiClient;
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -68,6 +52,11 @@ public class MainActivity extends Activity {
     protected KeyStore mKeyStore;
     protected KeyGenerator mKeyGenerator;
     protected SharedPreferences mSharedPreferences;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,15 +76,21 @@ public class MainActivity extends Activity {
         }
 
         TextView mSignUp = (TextView) findViewById(R.id.sign_up);
-        mSignUp.setOnClickListener(new View.OnClickListener() {
-                                       @Override
-                                       public void onClick(View view) {
-                                           //Toast.makeText(getBaseContext(), "Sign up from here", Toast.LENGTH_SHORT).show();
-                                           Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-                                           startActivity(intent);
 
-                                       }
+        // Listener for the SignUp Button
+        mSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(intent);
+            }
         });
+
+        //Listener for Login Button
+
+
+        //
+
         Cipher defaultCipher;
         Cipher cipherNotInvalidated;
         try {
@@ -113,62 +108,50 @@ public class MainActivity extends Activity {
         KeyguardManager keyguardManager = getSystemService(KeyguardManager.class);
         FingerprintManager fingerprintManager = getSystemService(FingerprintManager.class);
         Button purchaseButton = (Button) findViewById(R.id.figure_print_button);
-       // Button purchaseButtonNotInvalidated = (Button) findViewById(
-          //      R.id.purchase_button_not_invalidated);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-          //  purchaseButtonNotInvalidated.setEnabled(true);
-//            purchaseButtonNotInvalidated.setOnClickListener(
-//                    new PurchaseButtonClickListener(cipherNotInvalidated,
-//                            KEY_NAME_NOT_INVALIDATED));
-        }
-//        else {
-//            // Hide the purchase button which uses a non-invalidated key
-//            // if the app doesn't work on Android N preview
-//            purchaseButtonNotInvalidated.setVisibility(View.GONE);
-//            findViewById(R.id.purchase_button_not_invalidated_description)
-//                    .setVisibility(View.GONE);
-//        }
 
-        if (!keyguardManager.isKeyguardSecure()) {
-            // Show a message that the user hasn't set up a fingerprint or lock screen.
-            Toast.makeText(this,
-                    "Secure lock screen hasn't set up.\n"
-                            + "Go to 'Settings -> Security -> Fingerprint' to set up a fingerprint",
-                    Toast.LENGTH_LONG).show();
-            purchaseButton.setEnabled(false);
-           // purchaseButtonNotInvalidated.setEnabled(false);
-            return;
-        }
+            if (!keyguardManager.isKeyguardSecure()) {
+                // Show a message that the user hasn't set up a fingerprint or lock screen.
+                Toast.makeText(this,
+                        "Secure lock screen hasn't set up.\n"
+                                + "Go to 'Settings -> Security -> Fingerprint' to set up a fingerprint",
+                        Toast.LENGTH_LONG).show();
+                purchaseButton.setEnabled(false);
+                return;
+            }
 
-        // Now the protection level of USE_FINGERPRINT permission is normal instead of dangerous.
-        // See http://developer.android.com/reference/android/Manifest.permission.html#USE_FINGERPRINT
-        // The line below prevents the false positive inspection from Android Studio
-        // noinspection ResourceType
-        if (!fingerprintManager.hasEnrolledFingerprints()) {
-            purchaseButton.setEnabled(false);
-            // This happens when no fingerprints are registered.
-            Toast.makeText(this,
-                    "Go to 'Settings -> Security -> Fingerprint' and register at least one fingerprint",
-                    Toast.LENGTH_LONG).show();
-            return;
+            // Now the protection level of USE_FINGERPRINT permission is normal instead of dangerous.
+            // See http://developer.android.com/reference/android/Manifest.permission.html#USE_FINGERPRINT
+            // The line below prevents the false positive inspection from Android Studio
+            // noinspection ResourceType
+            if (!fingerprintManager.hasEnrolledFingerprints()) {
+                purchaseButton.setEnabled(false);
+                // This happens when no fingerprints are registered.
+                Toast.makeText(this,
+                        "Go to 'Settings -> Security -> Fingerprint' and register at least one fingerprint",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            createKey(DEFAULT_KEY_NAME, true);
+            createKey(KEY_NAME_NOT_INVALIDATED, false);
+            purchaseButton.setEnabled(true);
+            purchaseButton.setOnClickListener(
+                    new PurchaseButtonClickListener(defaultCipher, DEFAULT_KEY_NAME));
         }
-        createKey(DEFAULT_KEY_NAME, true);
-        createKey(KEY_NAME_NOT_INVALIDATED, false);
-        purchaseButton.setEnabled(true);
-        purchaseButton.setOnClickListener(
-                new PurchaseButtonClickListener(defaultCipher, DEFAULT_KEY_NAME));
     }
 
-    /**
-     * Initialize the {@link Cipher} instance with the created key in the
-     * {@link #createKey(String, boolean)} method.
-     *
-     * @param keyName the key name to init the cipher
-     * @return {@code true} if initialization is successful, {@code false} if the lock screen has
-     * been disabled or reset after the key was generated, or if a fingerprint got enrolled after
-     * the key was generated.
-     */
+        /**
+         * Initialize the {@link Cipher} instance with the created key in the
+         * {@link #createKey(String, boolean)} method.
+         *
+         * @param keyName the key name to init the cipher
+         * @return {@code true} if initialization is successful, {@code false} if the lock screen has
+         * been disabled or reset after the key was generated, or if a fingerprint got enrolled after
+         * the key was generated.
+         */
+
     protected boolean initCipher(Cipher cipher, String keyName) {
         try {
             mKeyStore.load(null);
@@ -186,11 +169,11 @@ public class MainActivity extends Activity {
     /**
      * Proceed the purchase operation
      *
-     * @param withFingerprint {@code true} if the purchase was made by using a fingerprint
-     * @param cryptoObject the Crypto object
+     * @param withFingerprint {@code true} if the login was made by using a fingerprint
+     * @param cryptoObject    the Crypto object
      */
     public void onPurchased(boolean withFingerprint,
-            @Nullable FingerprintManager.CryptoObject cryptoObject) {
+                            @Nullable FingerprintManager.CryptoObject cryptoObject) {
         if (withFingerprint) {
             // If the user has authenticated with fingerprint, verify that using cryptography and
             // then show the confirmation message.
@@ -198,19 +181,9 @@ public class MainActivity extends Activity {
             tryEncrypt(cryptoObject.getCipher());
         } else {
             // Authentication happened with backup password. Just show the confirmation message.
-           // showConfirmation(null);
+            // showConfirmation(null);
         }
     }
-
-    // Show confirmation, if fingerprint was used show crypto information.
-//    private void showConfirmation(byte[] encrypted) {
-//        findViewById(R.id.confirmation_message).setVisibility(View.VISIBLE);
-//        if (encrypted != null) {
-//            TextView v = (TextView) findViewById(R.id.encrypted_message);
-//            v.setVisibility(View.VISIBLE);
-//            v.setText(Base64.encodeToString(encrypted, 0 /* flags */));
-//        }
-//    }
 
     /**
      * Tries to encrypt some data with the generated key in {@link #createKey} which is
@@ -231,7 +204,7 @@ public class MainActivity extends Activity {
      * Creates a symmetric key in the Android Key Store which can only be used after the user has
      * authenticated with fingerprint.
      *
-     * @param keyName the name of the key to be created
+     * @param keyName                          the name of the key to be created
      * @param invalidatedByBiometricEnrollment if {@code false} is passed, the created key will not
      *                                         be invalidated even if a new fingerprint is enrolled.
      *                                         The default value is {@code true}, so passing
@@ -239,7 +212,6 @@ public class MainActivity extends Activity {
      *                                         (the key will be invalidated if a new fingerprint is
      *                                         enrolled.). Note that this parameter is only valid if
      *                                         the app works on Android N developer preview.
-     *
      */
     public void createKey(String keyName, boolean invalidatedByBiometricEnrollment) {
         // The enrolling flow for fingerprint. This is where you ask the user to set up fingerprint
@@ -305,9 +277,6 @@ public class MainActivity extends Activity {
 
         @Override
         public void onClick(View view) {
-            // findViewById(R.id.confirmation_message).setVisibility(View.GONE);
-            // findViewById(R.id.encrypted_message).setVisibility(View.GONE);
-
             // Set up the crypto object for later. The object will be authenticated by use
             // of the fingerprint.
             if (initCipher(mCipher, mKeyName)) {
@@ -320,6 +289,9 @@ public class MainActivity extends Activity {
                 boolean useFingerprintPreference = mSharedPreferences
                         .getBoolean(getString(R.string.use_fingerprint_to_authenticate_key),
                                 true);
+
+                String value_str = String.valueOf(useFingerprintPreference);
+                Toast.makeText(getBaseContext(),value_str ,  Toast.LENGTH_LONG).show();
                 if (useFingerprintPreference) {
                     fragment.setStage(
                             FingerprintAuthenticationDialogFragment.Stage.FINGERPRINT);

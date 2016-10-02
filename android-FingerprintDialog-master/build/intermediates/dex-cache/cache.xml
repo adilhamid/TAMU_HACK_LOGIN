@@ -21,6 +21,42 @@
     </item>
     <item
         is-multidex="true"
+        jar="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.1.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="f62e763609f65e47dc6c498760a4accf02776788">
+        <dex dex="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.1.1_13e6f64caebddbd555abcca0c34d42031da4f507\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="65d086ee9daaf87b5af62ad24471edafa433354c">
+        <dex dex="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-appindexing-8.4.0_0018c63fbb996805f7ed0ffd93036a111bc97c7f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.1.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="c936c1bd42f0c018c18920c7bec619ef056b24f8">
+        <dex dex="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.1.1_ea12ee0a27764ea13c38a8b2b7a0f03d031c892d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="90c5209f82a687c096ae8f3f7f378f4f9d00b960">
+        <dex dex="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_d331ee87b0bb0f69d2a51eacb84d6bd2af67d154\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\exploded-aar\com.android.support\support-v13\24.1.1\jars\libs\internal_impl-24.1.1.jar"
         jumboMode="true"
         optimize="true"
@@ -57,30 +93,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.1.1\jars\classes.jar"
+        jar="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.4.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="f62e763609f65e47dc6c498760a4accf02776788">
-        <dex dex="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.1.1_13e6f64caebddbd555abcca0c34d42031da4f507\classes.dex" />
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-basement-8.4.0_b27084a79ab21e662944e8195ca8d342ec1915b1\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.1.1\jars\classes.jar"
+        jar="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.4.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="c936c1bd42f0c018c18920c7bec619ef056b24f8">
-        <dex dex="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.1.1_ea12ee0a27764ea13c38a8b2b7a0f03d031c892d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="977c9bb6912f83923157b2db3370eca030cd6d26">
-        <dex dex="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_d331ee87b0bb0f69d2a51eacb84d6bd2af67d154\classes.dex" />
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-base-8.4.0_28351cc222edb085e825861eb174fa5de2404d08\classes.dex" />
     </item>
     <item
         is-multidex="true"
