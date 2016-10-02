@@ -2,7 +2,9 @@ package com.example.android.fingerprintdialog;
 
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.fingerprint.FingerprintManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,9 +17,21 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -30,7 +44,7 @@ import javax.crypto.NoSuchPaddingException;
 /**
  * A login screen that offers login via email/password.
  */
-public class SignUpActivity extends MainActivity {
+public class SignUpActivity extends MainActivity implements  FingerprintAuthenticationDialogFragment.OnResponseListener {
 
     public void attemptLogin() {
         // Reset errors.
@@ -113,6 +127,7 @@ public class SignUpActivity extends MainActivity {
     private EditText mEmailView;
     private EditText mPasswordView;
     private Button mSignUpButton;
+    private ProgressBar mProgressBar;
 
     private Context mContext;
 
@@ -266,6 +281,9 @@ public class SignUpActivity extends MainActivity {
                 new SignUpButtonListener(defaultCipher, DEFAULT_KEY_NAME));
 
 
+        mProgressBar = (ProgressBar) findViewById(R.id.login_progress);
+
+
     }
 
     private class SignUpButtonListener implements View.OnClickListener {
@@ -280,6 +298,13 @@ public class SignUpActivity extends MainActivity {
 
         @Override
         public void onClick(View view) {
+            person = new Person();
+            person.setUIN(mUinView.getText().toString());
+            person.setEmailId(mEmailView.getText().toString());
+            person.setpassWord(mPasswordView.getText().toString());
+            mSignUpButton.setClickable(false);
+            mSignUpButton.setEnabled(false);
+            mProgressBar.setVisibility(View.VISIBLE);
             // Set up the crypto object for later. The object will be authenticated by use
             // of the fingerprint.
             if (initCipher(mCipher, mKeyName)) {
@@ -312,10 +337,143 @@ public class SignUpActivity extends MainActivity {
                         FingerprintAuthenticationDialogFragment.Stage.NEW_FINGERPRINT_ENROLLED);
                 fragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
             }
-            Toast.makeText(mContext, "sign up", Toast.LENGTH_LONG).show();
+          // Toast.makeText(mContext, "sign up", Toast.LENGTH_LONG).show();
         }
 
 
      }
+    class Person{
+        String UIN;
+        String EmailId;
+        String passWord;
+        String token;
 
+        void setUIN(String UIN){
+            this.UIN = UIN;
+        }
+        void setEmailId(String emailId){
+            this.EmailId = emailId;
+        }
+        void setpassWord(String passWord){
+            this.passWord = passWord;
+        }
+
+        void setToken(String token){
+            this.token = token;
+        }
+        String  getUIN(){
+            return UIN;
+        }
+        String  getEmailId(){
+            return EmailId;
+        }
+        String  getpassWord(){
+            return passWord;
+        }
+        String getToken(){return token;}
+    }
+
+    private Person person;
+    private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+
+            return POST(urls[0],person);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(getApplicationContext(), "Register" + result, Toast.LENGTH_LONG).show();
+            //save the token here
+
+            Intent intent = new Intent(mContext, MainActivity.class);
+            startActivity(intent);
+
+        }
+    }
+
+    public static String POST(String url, Person person){
+        InputStream inputStream = null;
+        String result = "";
+        try {
+
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("uin", person.getUIN());
+            jsonObject.accumulate("email", person.getEmailId());
+            jsonObject.accumulate("password", person.getpassWord());
+            jsonObject.accumulate("token", person.getToken());
+//{"uin":"3211221", "email":"shubham7jain@tamu.edu", "password" : "padsa231", "token" : "321132"}
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            // httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+
+        }
+
+        // 11. return result
+        return result;
+    }
+
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+
+    }
+
+
+
+    public void getResponse(int response){
+        if(response != 0){
+            new DownloadWebpageTask().execute("http://10.201.83.63:25118/login/v0.1/user");
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Error in Recognition", Toast.LENGTH_LONG).show();
+            mSignUpButton.setEnabled(true);
+            mSignUpButton.setClickable(true);
+            mProgressBar.setVisibility(View.GONE);
+        }
+
+    }
 }

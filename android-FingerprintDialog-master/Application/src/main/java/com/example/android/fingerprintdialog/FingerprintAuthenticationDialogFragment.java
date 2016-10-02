@@ -1,23 +1,8 @@
-/*
- * Copyright (C) 2015 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License
- */
-
 package com.example.android.fingerprintdialog;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
@@ -33,7 +18,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * A dialog which uses fingerprint APIs to authenticate the user, and falls back to password
@@ -41,6 +25,13 @@ import android.widget.Toast;
  */
 public class FingerprintAuthenticationDialogFragment extends DialogFragment
         implements TextView.OnEditorActionListener, FingerprintUiHelper.Callback {
+
+
+    public static interface OnResponseListener{
+        public abstract void getResponse(int response);
+    }
+
+    private OnResponseListener mListener;
 
     private Button mCancelButton;
     private Button mSecondDialogButton;
@@ -61,6 +52,12 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
     private SharedPreferences mSharedPreferences;
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mListener = (OnResponseListener)context;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -78,6 +75,8 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //
+                mListener.getResponse(0);
                 dismiss();
             }
         });
@@ -188,6 +187,7 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
         }
         mPassword.setText("");
         mActivity.onPurchased(false /* without Fingerprint */, null);
+        mListener.getResponse(0);
         dismiss();
     }
 
@@ -245,8 +245,20 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
         // Callback from FingerprintUiHelper. Let the activity know that authentication was
         // successful.
         mActivity.onPurchased(true /* withFingerprint */, mCryptoObject);
-        Toast.makeText(getContext(),"I am here",  Toast.LENGTH_LONG).show();
+        mListener.getResponse(1);
+    //   Toast.makeText(getContext(),"I am here",  Toast.LENGTH_LONG).show();
         dismiss();
+
+        //
+
+        //
+    }
+
+    @Override
+    public void onDestroy() {
+        //
+        // mListener.getResponse(0);
+        super.onDestroy();
     }
 
     @Override

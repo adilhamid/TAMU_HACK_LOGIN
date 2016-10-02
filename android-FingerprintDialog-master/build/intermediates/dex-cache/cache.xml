@@ -52,7 +52,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="90c5209f82a687c096ae8f3f7f378f4f9d00b960">
+        sha1="4c85721fd004576d6914aee2647533af92124206">
         <dex dex="D:\AndroidStudio\android-FingerprintDialog-master\Application\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_d331ee87b0bb0f69d2a51eacb84d6bd2af67d154\classes.dex" />
     </item>
     <item
