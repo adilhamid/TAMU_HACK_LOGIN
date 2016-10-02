@@ -1,0 +1,7 @@
+#Sat Oct 01 19:45:06 CDT 2016
+base.0=D\:\\AndroidStudio\\android-FingerprintDialog-master\\Application\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_05b0300a54e9332285cff18b30bbe7144ac48690
+renamed.1=classes2.dex
+renamed.0=classes.dex
+file.1=D\:\\AndroidStudio\\android-FingerprintDialog-master\\Application\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_d331ee87b0bb0f69d2a51eacb84d6bd2af67d154\\classes.dex
+base.1=D\:\\AndroidStudio\\android-FingerprintDialog-master\\Application\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_d331ee87b0bb0f69d2a51eacb84d6bd2af67d154
+file.0=D\:\\AndroidStudio\\android-FingerprintDialog-master\\Application\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_05b0300a54e9332285cff18b30bbe7144ac48690\\classes.dex
